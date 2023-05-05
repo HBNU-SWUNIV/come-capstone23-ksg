@@ -5,6 +5,7 @@ import List from "@/views/board/BoardList"
 import Detail from "@/views/board/BoardDetail"
 import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
+import Register from "@/views/common/Register"
 
 Vue.use(Router)
 
@@ -23,10 +24,7 @@ export default new Router({
     {
       path: '/about',
       name: 'About',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/PageAbout.vue')
+      component: () => import( '../views/PageAbout.vue')
     },
     {
       path: '/board/list',
@@ -42,6 +40,11 @@ export default new Router({
       path: '/board/write',
       name: 'Write',
       component: Write
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ]
 })
