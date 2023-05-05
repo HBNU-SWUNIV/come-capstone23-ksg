@@ -15,7 +15,7 @@
           </p>
         </form>
         <p>
-          <button type="button" class="w3-button w3-blue-grey w3-round">회원가입(미구현)</button>
+          <button type="button" class="w3-button w3-blue-grey w3-round" v-on:click="fnRegister">회원가입</button>
         </p>
       </div>
     </div>
