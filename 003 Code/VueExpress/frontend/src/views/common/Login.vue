@@ -80,6 +80,11 @@ export default {
 
     }
 
+    },
+    fnRegister() {                                // 회원 가입 버튼 누르면 Register.vue 로 전환.
+      this.$router.push({
+        path: '/register'
+      })
     }
   }
 }

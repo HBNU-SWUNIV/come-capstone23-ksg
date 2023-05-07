@@ -109,6 +109,8 @@ export default {
 					console.log('submit')}
 			else { this.RegisterFlag = false }
 		},
+
+		// 아이디 이미 존재하는 지 비교 여부 필요 
 	},
     
     computed: {
