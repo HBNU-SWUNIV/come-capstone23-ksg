@@ -6,25 +6,30 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');                                 // 백엔드 작업시 , 여기에 라우터 추가
+var loginRouter = require('./routes/login');
+var registerRouter = require('./routes/register');
 var boardlistRouter = require('./routes/boardlist');
 
 var app = express();
 
+app.use(express.json());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter); 
+app.use('/', indexRouter);
 //app.use('/users', usersRouter);
-app.use('/api/login', loginRouter);                                            // 여기도 api 호출시 설정
+app.use('/api/login', loginRouter);
+app.use('/api/register', registerRouter);
 app.use('/api/boardlist', boardlistRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
