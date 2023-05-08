@@ -51,6 +51,7 @@ export default {
         this.$http.post("/api/login", this.user)
                 .then(res => {
                     console.log('send success!');
+                    alert("환영합니다.")
                     const users = res.data.user;  
                     console.log(users.id);
                     console.log(users.pw);
@@ -61,8 +62,9 @@ export default {
                     //alert('전송 확인 \n아이디 : '+ user.id  +  '\n비밀번호 : ' + user.pw + "\n이름 : " + user.name)
 
                 })
-                .catch(err => {
+                .catch(() => {
                     console.error('send fali!');
+                    alert("존재하지않는 id 혹은 비밀번호가 일치하지 않습니다.");
                 });
             // go to list page
          //   this.$router.push({ name: "갈 곳 이름" });
