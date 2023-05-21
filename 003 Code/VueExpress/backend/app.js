@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var boardlistRouter = require('./routes/boardlist');
+var commentlistRouter = require('./routes/commentlist');
 
 var app = express();
 
@@ -27,6 +28,8 @@ app.use('/', indexRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/boardlist', boardlistRouter);
+app.use('/api/commentlist', commentlistRouter);
+
 
 
 

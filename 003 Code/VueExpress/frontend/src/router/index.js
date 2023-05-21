@@ -6,6 +6,7 @@ import Detail from "@/views/board/BoardDetail"
 import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
 import Register from "@/views/common/Register"
+import Search from "@/views/board/BoardSearch"
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/board/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })

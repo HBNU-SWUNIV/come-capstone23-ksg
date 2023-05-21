@@ -1,9 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      컴공 모여라, 메이저 리거 홈페이지
-    </p>
     <h3>Capstone project</h3>
     <ul>
       <li><a href="https://github.com/HBNU-SWUNIV/come-capstone23-ksg" target="_blank" rel="noopener">KSG Team Git hub</a></li>
