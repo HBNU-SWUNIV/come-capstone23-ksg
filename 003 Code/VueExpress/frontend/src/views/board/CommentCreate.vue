@@ -4,7 +4,7 @@
       <b-form-textarea
         id="textarea"
         v-model="context"
-        :placeholder="isSubComment ? '대댓글을 입력해주세요.' : '댓글을 입력해주세요.'"
+        :placeholder="isSubComment ? '댓글을 입력해주세요.' : '댓글을 입력해주세요.'"
         rows="3"
         max-rows="6"
       ></b-form-textarea>
