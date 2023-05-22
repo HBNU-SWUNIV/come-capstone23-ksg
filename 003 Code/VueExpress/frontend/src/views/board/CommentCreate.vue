@@ -4,7 +4,7 @@
       <b-form-textarea
         id="textarea"
         v-model="context"
-        :placeholder="isSubComment ? '덧글에 덧글을 달아주세요~!' : '코멘트를 달아주세요~!'"
+        :placeholder="isSubComment ? '대댓글을 입력해주세요.' : '댓글을 입력해주세요.'"
         rows="3"
         max-rows="6"
       ></b-form-textarea>
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      name: "르라나",
+      name: "",
       context: ""
     };
   },
@@ -41,7 +41,7 @@ export default {
         user_id: 1,
         content_id: this.id,
         context: this.context,
-        created_at: "2019-04-19 14:11:11",
+        created_at: null,
         updated_at: null
       });
       this.reloadComments();
@@ -55,7 +55,7 @@ export default {
         comment_id: this.commentId,
         user_id: 1,
         context: this.context,
-        created_at: "2019-04-19 16:22:11",
+        created_at: null,
         updated_at: null
       });
       this.reloadSubComments();
