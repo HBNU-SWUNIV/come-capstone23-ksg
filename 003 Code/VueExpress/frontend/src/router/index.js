@@ -6,6 +6,7 @@ import Detail from "@/views/board/BoardDetail"
 import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
 import Register from "@/views/common/Register"
+import Schedule from "@/views/Schedule"
 
 Vue.use(Router)
 
@@ -22,9 +23,9 @@ export default new Router({
       component: Login  //로그인 컴포넌트 추가
     },
     {
-      path: '/about',
-      name: 'About',
-      component: () => import( '../views/PageAbout.vue')
+      path: '/scedule',
+      name: 'Schedule',
+      component: Schedule
     },
     {
       path: '/board/list',

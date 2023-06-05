@@ -10,6 +10,7 @@ var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var boardlistRouter = require('./routes/boardlist');
 var commentlistRouter = require('./routes/commentlist');
+var schedulelistRouter = require('./routes/schedulelist');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/boardlist', boardlistRouter);
 app.use('/api/commentlist', commentlistRouter);
+app.use('/api/schedulelist', schedulelistRouter);
 
 
 
