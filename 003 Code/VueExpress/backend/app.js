@@ -14,6 +14,7 @@ var schedulelistRouter = require('./routes/schedulelist');
 
 var app = express();
 
+
 app.use(express.json());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -1,39 +1,65 @@
 const express = require('express');
 const router = express.Router();
+const app = express();
 
 const control = require('../src/customer/control');
 const users = require('../data/users.json');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
-router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
+app.use(cookieParser());
 
- /*router.get('/', function(req, res){                         // 요청이 들어오면 user의 [] 번째 데이터를 반환.
-    res.json({ user: users[2] });
-    console.log('요청 오기는 왔음')
-});
 
-  router.post('/', function(req, res){
-    let user = req.body;                                                //전송 받음 user 정보
-    // 여기에서 다른 API(DB와 아이디 대조 API)로 데이터 보내고
-    
-    // 맞다 아니다만 여기로 보내서, res에 넣어주기.
   
-
-    const member = users.find(m => m.id === user.id && m.password == user.pw);
-    
+  router.post('/', function(req, res){                                              //전송 받음 user 정보
+    const {id,pw} = req.body;
+    const member = users.find(m => m.id === id && m.password == pw);
+    console.log(member);
     if(member) {
-        res.send(member);
+        const Options = {
+            domain:"localhost",
+            Path:"/",
+            httpOnly: true
+        };
+        const token = jwt.sign({
+            id: member.id,
+            name: member.name,
+        },'ksg',{
+            expiresIn:"20m",
+            issuer:"majorleague"
+        });
+        res.cookie("token", token,Options);
+        res.status(200).json(member);
 
     }
     else {
         res.send(404);
     }
-    user.id = user.id + '아이디 수정'                 // 수정 확인용
-    user.pw = user.pw 
-    user.name = user.name 
 
     //console.log(user.id, user.pw)
     //res.json({ user }) ;                 // res.json({ return 할 것 }) -> true, false 로만 보내는 게 좋아 보임
     
-}); */
+}); 
+/*
+router.get('/', function(req, res){         
+    console.log(req.cookies);  
+    console.log("dfdfdf");
+    
+    // 요청이 들어오면 user의 [] 번째 데이터를 반환.
+    if(req.cookies && req.cookies.account){
+        const member = JSON.parse(req.cookies.account);
+
+        if(member.id){
+            return res.send(member);
+        }
+    }
+});
+
+router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
+
+router.get('/', function(req, res){                         // 요청이 들어오면 user의 [] 번째 데이터를 반환.
+    res.json({ user: users[2] });
+    console.log('요청 오기는 왔음')
+});*/
 
 module.exports = router;
