@@ -52,10 +52,13 @@ export default {
                 .then(res => {
                     console.log('send success!');
                     alert("환영합니다.")
-                    const users = res.data.user;  
+                    const users = res.data;  
                     console.log(users.id);
                     console.log(users.pw);
                     console.log(users.name);
+                    this.$router.push({
+                     path: '/'
+                    })
                     // const users = res.user;        
                     // if(user) this.user = user;         // 백엔드에서 받은 정보를 화면에 출력. this.user 는 현재 유저 칸 정보
                     //console.log('전송 확인 \n아이디 : '+ user.id  +  '\n비밀번호 : ' + user.pw + "\n이름 : " + user.name)
