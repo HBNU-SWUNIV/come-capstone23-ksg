@@ -7,6 +7,9 @@ import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
 import Register from "@/views/common/Register"
 import Schedule from "@/views/Schedule"
+import bList from "@/views/book/BookList"
+import bWrite from "@/views/book/BookWrite"
+import bDetail from "@/views/book/BookDetail"
 
 Vue.use(Router)
 
@@ -46,6 +49,21 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+        {
+      path: '/book/list',
+      name: 'bList',
+      component: bList
+    },
+    {
+      path: '/book/write',
+      name: 'bWrite',
+      component: bWrite
+    },
+    {
+      path: '/book/detail',
+      name: 'bDetail',
+      component: bDetail
     },
   ]
 })
