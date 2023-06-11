@@ -33,12 +33,13 @@ const getCustomer = (req, res) =>{
             const token = jwt.sign({
                 id: member.userid,
                 name: member.nickname,
+                serialID: member.id,
             },'ksg',{
                 expiresIn:"20m",
                 issuer:"majorleague"
             });
             res.cookie("token", token,Options);
-            res.status(200).json(userinfo);
+            res.status(200).json(member);
         }
         else {
             res.send(404);
@@ -65,12 +66,13 @@ const registercomment = (req, res) =>{
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
     boardid = req.body.id;
+    customerid = decoded.serialID;
     writer = decoded.name;
     year = req.body.year;
     month = req.body.month;
     day = req.body.day;
     contents = req.body.contents;
-    pool.query(queries.registercomment, [ boardid, writer , year , month,day,contents],(error,results) => {
+    pool.query(queries.registercomment, [ boardid, writer , year , month,day,contents,customerid],(error,results) => {
         if(error) throw error;
         res.status(201).send("댓글이 등록되었습니다..");
     });
@@ -114,9 +116,9 @@ const registerCustomer=(req , res) =>{
     userpw = req.body.password;
     nickname = req.body.name;
     email = req.body.email;
+    console.log("....");
 
-
-    pool.query(queries.registerCustomer, [ userid , userpw , nickname , email],(error,results) => {
+      pool.query(queries.registerCustomer, [ userid , userpw , nickname , email],(error,results) => {
         if(error) throw error;
         res.status(201).send("회원가입이 완료되었습니다.");
     });
@@ -124,15 +126,14 @@ const registerCustomer=(req , res) =>{
 const registerboard=(req , res) =>{
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
- 
-    boardid = req.body.id;
+    customerid = decoded.serialID;
     writer = decoded.name;
     year = req.body.year;
     month = req.body.month;
     day = req.body.day;
     title = req.body.title;
     contents = req.body.contents;
-    pool.query(queries.registerboard, [ boardid, writer , year , month,day,title,contents],(error,results) => {
+    pool.query(queries.registerboard, [ writer , year , month,day,title,contents,customerid],(error,results) => {
         if(error) throw error;
         res.status(201).send("게시글이 등록되었습니다..");
     });

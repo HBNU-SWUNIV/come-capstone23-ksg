@@ -11,7 +11,7 @@ const control = require('../src/customer/control');
 
 app.use(cookieParser());
 // router.post('/email', control.SendEmail);
-
+/*
 router.get('/', function(req, res){
     res.send(boards);
 });
@@ -63,13 +63,14 @@ router.post('/:upload', function(req, res){
             res.send('end');
         });
     });    
-}); 
-/*
+});
+*/ 
+
 router.get('/', control.getboard);
 router.get('/id/:id', control.getboarddetail);
 router.get('/writer/:writer', control.searchwriter);
 router.post('/:upload', control.registerboard); 
 router.get('/:title', control.searchtitle); 
-*/
+
 
 module.exports = router;

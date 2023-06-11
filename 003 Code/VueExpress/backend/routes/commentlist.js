@@ -9,7 +9,7 @@ app.use(cookieParser());
 const fs = require('fs');                                       // 게시글 저장용 임시
 const path = require('path'); 
 
-
+/*
 router.get('/', function(req, res){
     res.send(comments);
 }); 
@@ -43,14 +43,15 @@ router.post('/:upload', function(req, res){
         });
     });    
 }); 
+*/
 
-/*
 router.get('/', control.getcommentlist);
 router.get('/id/:id', control.getcommentdetail);
 router.post('/:upload', control.registercomment);
 
-
+/*
 router.get('/', function(req, res){
     res.send(comments);
-}); */
+});
+*/ 
 module.exports = router;
