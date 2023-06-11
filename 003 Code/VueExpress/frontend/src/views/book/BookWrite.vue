@@ -36,14 +36,12 @@
     data() {
         return {
             book: {
-                bookid: "",
+                id: "",
                 writer: "",
                 year: 0 ,
                 month: 0 ,
                 day : 0 ,
                 bookname: "",
-                author: "",
-                publisher: "",
                 contents: "",
                 image: "",
             },
@@ -57,7 +55,7 @@
   
     methods: {
         InputImage() {
-            this.input.image = this.$refs.serveyImage.files
+            this.book.image = this.$refs.serveyImage.files
             console.log('input image!');
         },
         mySubmit() {
