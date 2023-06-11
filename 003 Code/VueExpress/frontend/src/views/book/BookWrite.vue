@@ -57,7 +57,7 @@
   
     methods: {
         InputImage() {
-            this.book.image = this.$refs.serveyImage.files
+            this.input.image = this.$refs.serveyImage.files
             console.log('input image!');
         },
         mySubmit() {
@@ -87,7 +87,7 @@
           // get 게시판 내용
         this.$http.get('api/booklist').then(response => {
             const books = response.data;
-            this.book.bookid = books.length + 1;
+            this.book.id = books.length + 1;
         });
     }
     }

@@ -26,7 +26,7 @@
                             <p></p>
                             <textarea input type="text" name="contents" cols="150" rows="2" required
                                 v-model="comment_to_wirte.contents" class="w3-input w3-border" style="resize: none;"></textarea>
-                            <button type="submit">댓글 등록</button>
+                            <button type="submit" v-if ="$store.state.account.id">댓글 등록</button>
                         </div>
                     </form>
 

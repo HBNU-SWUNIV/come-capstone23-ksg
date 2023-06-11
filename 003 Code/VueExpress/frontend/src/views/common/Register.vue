@@ -96,11 +96,11 @@ export default {
             }
         },
 		fnSubmit() {
-			if (!this.isEmpty(this.regi.ID) &&
+			if (/* !this.isEmpty(this.regi.ID) &&
 				!this.isEmpty(this.regi.password) &&
 				!this.isEmpty(this.regi.passwordCheck) &&
 				!this.isEmpty(this.regi.name) &&
-				!this.isEmpty(this.regi.email) &&
+				!this.isEmpty(this.regi.email) &&*/
 				this.pwValidFlag == true &&
 				this.pwCheckFlag == true &&
 				this.nameValidFlag == true &&
@@ -108,6 +108,17 @@ export default {
 					this.RegisterFlag = true
 					console.log('submit')}
 			else { this.RegisterFlag = false }
+			if(this.RegisterFlag == true)
+			{
+				this.$http.post('/api/register', this.regi).then(res => {
+         		 alert("회원가입이 완료되었습니다.")
+      			});
+				  this.$router.push({
+                     path: '/'
+                    })
+			}
+
+			
 		},
 
 		// 아이디 이미 존재하는 지 비교 여부 필요 

@@ -17,7 +17,7 @@
               </div>
             </div>
           </div>
-          <v-btn outlined class="mr-4" color="grey darken-2" @click="fnWrite">글쓰기</v-btn>
+          <v-btn outlined class="mr-4"  color="grey darken-2" @click="fnWrite" v-if ="$store.state.account.id">글쓰기 </v-btn>
         </div>
 
         <div class="post-search">
