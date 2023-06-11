@@ -3,19 +3,19 @@
     <div class="book-list">
       <h1>서적평가 목록</h1>
       <div class="container">
-        <th>번호</th>
-        <th>작성자</th>
-        <th>등록일</th>
-        <th>제목</th>
-        <th>저자</th>
-        <th>출판사</th>
+        <th>번호 </th>
+        <th>작성자 </th>
+        <th>등록일 </th>
+        <th>제목 </th>
+        <th>저자 </th>
+        <th>출판사 </th>
         <div class="outer">
           <div class="inner">
-            <div class="centered" v-for="book in books" :key="book.id">
+            <div class="centered" v-for="book in books" :key="book.bookid">
                       <div>
-                          {{book.id}} - <i>{{book.bookname}}</i> - <i>{{book.author}}</i> - <i>{{book.publisher}}</i>
-                           - [{{book.year}}:{{ book.month }}:{{ book.day }}] -
-                          <router-link :to="{ name: 'bDetail', params: { bookid: book.id }}"> {{ book.writer }}</router-link>
+                          {{book.bookid}} - 
+                          <router-link :to="{ name: 'bDetail', params: { id: book.bookid } }"> {{ book.bookname }}</router-link>
+                           - <i>{{book.author}}</i> - <i>{{book.publisher}}</i> - [{{book.year}}:{{ book.month }}:{{ book.day }}] 
                       </div>
             </div>
           </div>

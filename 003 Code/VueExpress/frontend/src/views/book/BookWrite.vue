@@ -36,12 +36,14 @@
     data() {
         return {
             book: {
-                id: "",
+                bookid: "",
                 writer: "",
                 year: 0 ,
                 month: 0 ,
                 day : 0 ,
                 bookname: "",
+                author: "",
+                publisher: "",
                 contents: "",
                 image: "",
             },
@@ -85,7 +87,7 @@
           // get 게시판 내용
         this.$http.get('api/booklist').then(response => {
             const books = response.data;
-            this.book.id = books.length + 1;
+            this.book.bookid = books.length + 1;
         });
     }
     }
