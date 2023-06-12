@@ -4,15 +4,20 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import Vuex from "vuex";
+import Vuex from 'vuex';
 import Vuetify from 'vuetify'		// <-- 추가
+import  BootstrapVue from 'bootstrap-vue'
 import 'vuetify/dist/vuetify.min.css'	// <-- 추가
-
+import createPersistedState from 'vuex-persistedstate';
 import 'material-design-icons-iconfont/dist/material-design-icons.css' // <-- 추가
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
+Vue.use(BootstrapVue);
+
 export const store = new Vuex.Store({
   state() {
     return{
@@ -25,7 +30,12 @@ export const store = new Vuex.Store({
     setAccount(state,payload){
       state.account.id = payload;
     }
-  }
+  },
+
+  plugins: [
+    createPersistedState({
+    })
+  ],
 
 });
 Vue.prototype.$http = axios

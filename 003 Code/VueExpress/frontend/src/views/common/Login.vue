@@ -1,17 +1,18 @@
 <template>
   <div>
     <div>
-      <h2>로그인</h2>
       <div id="loginForm">
         <form @submit.prevent="fnLogin">
+          <div class="mb-3 mt-3" align ="left">
+            <label for="id">아이디:</label>
+            <input class="form-control" name="uid" id="id" placeholder="아이디" v-model="user.id" type="text">
+          </div>
+          <div class="mb-3" align ='left'>
+            <label for="pw">비밀번호:</label>
+            <input name="password" class="form-control" id="pw" placeholder="비밀번호" v-model="user.pw" type="password">
+          </div>
           <p>
-            <input class="w3-input" name="uid" placeholder="아이디" v-model="user.id" type="text"><br>
-          </p>
-          <p>
-            <input name="password" class="w3-input" placeholder="비밀번호" v-model="user.pw" type="text">
-          </p>
-          <p>
-            <button type="submit" class="w3-button w3-green w3-round">로그인</button>
+            <button type="submit" class="btn btn-primary">로그인</button>
           </p>
         </form>
         <p>

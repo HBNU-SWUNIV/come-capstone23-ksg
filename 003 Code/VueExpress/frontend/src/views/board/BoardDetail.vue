@@ -4,12 +4,14 @@
         <div class="container">
             <div class="outer">
                 <div class="inner">
+                    <strong>제목: {{ board.title }}</strong> - <i>작성자: {{ board.writer }}</i>
+                            [{{ board.year }}.{{ board.month }}.{{ board.day }}]
                     <div class="centered">
-                        <div>
-                            <strong>{{ board.title }}</strong> - <i>{{ board.writer }}</i>
-                            [{{ board.year }}:{{ board.month }}:{{ board.day }}]
-                            <p>{{ board.contents }}</p>
-                        </div>
+                            <div class="border">
+                            {{ board.contents }}
+                            </div>
+                    <v-btn class="mr-4"  color="blue" @click="fnWrite" v-if ="$store.state.account.id">수정 </v-btn>
+                    <v-btn class="mr-4"  color="red" @click="fndelete" v-if ="$store.state.account.id">삭제 </v-btn>
                     </div>
 
                     <div class="comment" v-for="comment in comments" :key="comment.id">
@@ -19,18 +21,23 @@
                                 [{{ comment.year }}:{{ comment.month }}:{{ comment.day }}] : {{ comment.contents }}
                             </li>
                         </div>
+
+
                     </div>
 
                     <form method="post" @submit.stop.prevent="mySubmit">
                         <div class="wirte">
                             <p></p>
-                            <textarea input type="text" name="contents" cols="150" rows="2" required
-                                v-model="comment_to_wirte.contents" class="w3-input w3-border" style="resize: none;"></textarea>
+                            <label for="contents" v-if ="$store.state.account.id">댓글 작성:</label>
+                            <textarea input type="text" name="contents" cols="150" rows="3" required
+                                v-model="comment_to_wirte.contents" class="form-control" style="resize: none;" v-if ="$store.state.account.id"></textarea>
+                            <div class="border" v-else>{{ "댓글을 작성하시려면 로그인을 먼저 해주세요"}}</div>
                             <button type="submit" v-if ="$store.state.account.id">댓글 등록</button>
                         </div>
                     </form>
 
                     <router-link :to="{ name: 'List' }">돌아가기</router-link>
+                    
                 </div>
             </div>
         </div>
@@ -41,7 +48,7 @@
 /* eslint-disable */
 export default {
     created: function () {
-        var id = this.$route.params.id;
+        var id = Number(this.$route.params.id);
         this.$http.get(`/api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
         });
@@ -85,16 +92,53 @@ export default {
           this.$http.post("api/commentlist/upload", this.comment_to_wirte)
               .then(res => {
                   console.log('upload success!');
+                  alert("댓글이 등록되었습니다.")
               })
               .catch(err => {
                   console.error('upload fali!');
               });
+              
           // go to list page
-          router.go(1);
+          this.$http.get("api/login").then(res => {
+                    store.commit('setAccount', res.data.userid);
+          })
+          this.$router.go(this.$router.currentRoute);
       },
+      fndelete(){
+        this.$http.delete(`/api/boardlist/id/${id}`, this.board)
+              .then(res => {
+                  console.log('upload success!');
+                  alert("게시글이 삭제되었습니다.")
+              })
+      }
   }
   
 };
 
 
 </script>
+
+<style>
+.outer {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.inner {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.centered {
+  position: relative;
+  display: contents;
+
+  width: 50%;
+  padding: 1em;
+  font-size: 1em;
+  /* background: orange; */
+  /* color: white; */
+}
+</style>

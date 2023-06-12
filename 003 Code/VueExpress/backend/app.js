@@ -33,6 +33,8 @@ app.use('/api/register', registerRouter);
 app.use('/api/boardlist', boardlistRouter);
 app.use('/api/commentlist', commentlistRouter);
 app.use('/api/booklist', booklistRouter);
+app.use('/api/schedulelist', schedulelistRouter);
+
 
 
 

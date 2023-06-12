@@ -56,7 +56,7 @@ router.get('/', function(req, res){
     }
 });
 
-router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
+// router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
 
 /*
 router.get('/', function(req, res){                         // 요청이 들어오면 user의 [] 번째 데이터를 반환.

@@ -24,8 +24,60 @@
             </v-toolbar-title>
 
 
-            <v-spacer>
-            </v-spacer>
+            <v-spacer></v-spacer>
+
+
+            <v-dialog v-model="dialog" max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                  일정추가
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="text-h5"></span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+
+                      <v-col cols="12" sm="6">
+                        <v-date-picker v-model="dates" range></v-date-picker>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                      </v-col>
+
+                      <v-col style="width: 350px; flex: 0 1 auto;">
+                        <h2>Start:</h2>
+                        <v-time-picker v-model="timer.starttime" format="24hr" :max="timer.endtime"></v-time-picker>
+                      </v-col>
+                      <v-col style="width: 350px; flex: 0 1 auto;">
+                        <h2>End:</h2>
+                        <v-time-picker v-model="timer.endtime" format="24hr" :min="timer.starttime"></v-time-picker>
+                      </v-col>
+
+
+                      <v-col cols="12">
+                        <v-text-field label="일정 이름" v-model="scheduleplus.schedulename" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-autocomplete :items="['단기 일정', '장기 일정']" label="일정 타입" single></v-autocomplete>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="dialog = false">
+                    Close
+                  </v-btn>
+                  <v-btn color="blue darken-1" text @click="submitschedule">
+                    Save
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
 
 
             <v-menu bottom right>
@@ -63,9 +115,7 @@
             :type="type" @click:event="showEvent" @click:more="viewDay" @click:date="viewDay"
             @change="updateRange"></v-calendar>
 
-          <v-btn icon @click="plus">
-            <v-icon>mdi-calendar-plus</v-icon>
-          </v-btn>
+
 
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
             <v-card color="grey lighten-4" min-width="300px" flat>
@@ -121,7 +171,22 @@ export default {
     schedules: [],
     colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     names: ['미팅', '휴일', '면담', '가족여행', '행사', '수강', '강연', '모임'],
+    dialog: false,
+
+    scheduleplus: {
+      schedulename: "",
+      start: "",
+      end: "",
+      color: "black"
+    },
+
+    dates: [],
+    timer: () => ({
+      starttime: null,
+      endtime: null
+    })
   }),
+
   mounted() {
     this.$refs.calendar.checkChange()
   },
@@ -158,21 +223,21 @@ export default {
 
       nativeEvent.stopPropagation()
     },
-    updateRange({ start, end }) {
+    updateRange({}) {
       const events = [];
 
       this.$http.get("/api/schedulelist").then(response => {
         this.schedules = response.data;
         const allDay = this.rnd(0, 3) === 0
-        
-        for (let i=0; i<this.schedules.length;i++) {
+
+        for (let i = 0; i < this.schedules.length; i++) {
 
           console.log("진입함")
-          const schedulename = this.schedules[i].name;
+          const schedulename = this.schedules[i].schedulename;
           const first = new Date(this.schedules[i].start);
           const second = new Date(this.schedules[i].end);
           const currentcolor = this.schedules[i].color;
-          
+
           events.push({
             name: schedulename,
             start: first,
@@ -199,8 +264,27 @@ export default {
     /// 여기까지 기본 제공 예제
 
 
-    plus({ start, end }) {
-    }
+    submitschedule() {                      // 일정 추가 버튼 눌리면
+      this.dialog = false;
+
+      this.scheduleplus.start = this.dates[0] + "T" + this.timer.starttime + ":00"
+      this.scheduleplus.end = this.dates[1] + "T" + this.timer.endtime + ":00"
+
+      console.log(typeof (this.scheduleplus.start))
+      console.log(this.scheduleplus.start)
+      console.log(this.scheduleplus.schedulename)
+
+      this.$http.post("api/schedulelist/upload", this.scheduleplus)
+        .then(res => {
+          console.log('upload success!');
+        })
+        .catch(err => {
+          console.error('upload fali!');
+        });
+
+        this.$router.go(0);
+    },
   },
+
 }
 </script>

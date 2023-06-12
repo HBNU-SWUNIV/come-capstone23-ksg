@@ -10,6 +10,26 @@
 </template>
 
 
+
+<template>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand to="/"> Major League </b-navbar-brand>
+      <b-navbar-toggle target="nav_collapse"/>
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item to="/schedule">나만의 시간표</b-nav-item>
+          <b-nav-item to="/board/list">게시판</b-nav-item>
+          <b-nav-item to="/book/list">서적평가</b-nav-item>
+          <b-nav-item to="/login" v-if ="!$store.state.account.id">로그인</b-nav-item>
+          <b-nav-item to="/" @click="fnlogout" v-else>로그아웃</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>  
+    </b-navbar>
+  </div>
+</template>
+
+
 <script>
 
 import { store } from '../main';

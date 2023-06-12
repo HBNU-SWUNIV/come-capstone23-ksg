@@ -26,7 +26,7 @@ export default new Router({
       component: Login  //로그인 컴포넌트 추가
     },
     {
-      path: '/scedule',
+      path: '/schedule',
       name: 'Schedule',
       component: Schedule
     },
@@ -36,7 +36,7 @@ export default new Router({
       component: List
     },
     {
-      path: '/board/detail',
+      path: '/board/detail/:id',
       name: 'Detail',
       component: Detail
     },

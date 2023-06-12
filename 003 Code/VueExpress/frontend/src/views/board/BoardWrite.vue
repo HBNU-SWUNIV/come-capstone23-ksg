@@ -4,10 +4,7 @@
           <label for="title">제목</label>
           <input type="text" name="title" required v-model="board.title">
       </div>
-      <div>
-          <label for="writer">작성자</label>
-          <input type="text" name="writer" required v-model="board.writer">
-      </div>
+      
       <div>
           <label for="contents">내용</label>
           <textarea input type="text" name="contents" cols="30" rows="10" required v-model="board.contents" class="w3-input w3-border" style="resize: none;">

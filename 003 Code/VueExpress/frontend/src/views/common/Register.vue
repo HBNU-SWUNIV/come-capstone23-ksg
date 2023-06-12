@@ -1,47 +1,48 @@
 <template>
 	<div class="container">
 		<form @submit.prevent="fnSubmit">
-            <div>
+            <div class="form-group" align ="left">
 				<label for="ID">아이디</label>
-				<input type="text" id="ID" maxlength="20" v-model="regi.ID" />
+				<input class="form-control" id="ID" placeholder="아이디를 입력해주세요" maxlength="20" v-model="regi.ID" type="text">
 			</div>
             <div>
                 <span v-if="!idValid">잘못된 아이디입니다.</span>
             </div>
 
-			<div>
+            <div class="form-group" align ="left">
+				
 				<label for="password">비밀번호</label>
-				<input type="password" id="password" maxlength="16" @blur="pwValid" v-model="regi.password" />
+				<input class="form-control" type="password" id="password" placeholder="비밀번호를 입력해주세요" maxlength="16" @blur="pwValid" v-model="regi.password" />
 			</div>
 			<div>
                 <span v-if="!pwValidFlag">비밀번호는 8~16자리, 영문/숫자/특수문자가 포함되어야 합니다.</span>
             </div>
 
-			<div>
+            <div class="form-group" align ="left">
 				<label for="passwordCheck">비밀번호 확인</label>
-				<input type="password" id="passwordCheck" @blur="pwCheckValid" v-model="passwordCheck" />
+				<input class="form-control" type="password" id="passwordCheck" placeholder="비밀번호 확인" maxlength="16" @blur="pwCheckValid" v-model="passwordCheck" />
 			</div>
 			<div>
                 <span v-if="!pwCheckFlag">비밀번호가 동일하지 않습니다.</span>
             </div>
 
-            <div>
+            <div class="form-group" align ="left">
 				<label for="name">닉네임</label>
-				<input type="text" id="name" maxlength="20" @blur="nameValid" v-model="regi.name" />
+				<input class="form-control" type="text" id="name" placeholder="닉네임을 입력해주세요" maxlength="16" @blur="nameValid" v-model="regi.name" />
 			</div>
 			<div>
                 <span v-if="!nameValidFlag">닉네임을 입력해주세요.</span>
             </div>
 
-            <div>
+            <div class="form-group" align ="left">
 				<label for="email">이메일</label>
-				<input type="text" id="email" maxlength="100" @blur="emailValid" v-model="regi.email" />
+				<input class="form-control" type="text" id="email" placeholder="이메일을 입력해주세요" maxlength="100" @blur="emailValid" v-model="regi.email" />
 			</div>
           	<div>
                 <span v-if="!emailValidFlag">잘못된 이메일입니다.</span>
 			</div>
 
-			<button type="submit">회원가입</button>
+            <button type="submit" class="btn btn-primary">회원가입</button>
 
 		</form>
 	</div>
