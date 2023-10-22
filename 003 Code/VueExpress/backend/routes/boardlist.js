@@ -48,8 +48,7 @@ router.post('/:upload', async function(req, res){
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
     board.writer = decoded.name;
-    
-    
+
     // get path
     const myPath = path.join(__dirname, '..', 'data', 'board.json');
 
@@ -58,7 +57,7 @@ router.post('/:upload', async function(req, res){
         let parsedData = JSON.parse(data);
         parsedData.push(board);
         fs.writeFile(myPath, JSON.stringify(parsedData), (err)=>{
-            if (err) throw err;a
+            if (err) throw err;
             console.log('boards update complete!');
             res.send('end');
         });
