@@ -43,7 +43,7 @@ router.get('/:title', function(req, res){                             // 게시�
     res.send(board);
 });
 
-router.post('/:upload', function(req, res){
+router.post('/:upload', async function(req, res){
     let board = req.body;
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");

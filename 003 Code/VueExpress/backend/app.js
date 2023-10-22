@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const cors = require('cors');
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
@@ -12,11 +12,15 @@ var boardlistRouter = require('./routes/boardlist');
 var commentlistRouter = require('./routes/commentlist');
 var schedulelistRouter = require('./routes/schedulelist');
 var booklistRouter = require('./routes/booklist');
+var imguploadRouter = require('./routes/imgupload');
 
 var app = express();
 
+const maria =require('./db');
+
 
 app.use(express.json());
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -24,7 +28,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'));
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
@@ -34,6 +39,9 @@ app.use('/api/boardlist', boardlistRouter);
 app.use('/api/commentlist', commentlistRouter);
 app.use('/api/booklist', booklistRouter);
 app.use('/api/schedulelist', schedulelistRouter);
+app.use('/api/imgupload', imguploadRouter);
+
+
 
 
 

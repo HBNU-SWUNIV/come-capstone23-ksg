@@ -1,4 +1,20 @@
-const Pool = require('pg').Pool;
+const maria = require('mysql');
+
+
+const conn = maria.createConnection({
+    host:'localhost',
+    port:3306,
+    user:'',
+    passwod:'ksg5678!',
+    database:'projectDB',
+});
+
+module.exports = conn;
+
+
+
+
+/* const Pool = require('pg').Pool;
 
 const pool = new Pool ({
     user:"postgres",
@@ -8,7 +24,7 @@ const pool = new Pool ({
     port:5432,
 });
 
-module.exports = pool;
+module.exports = pool; */
 
 
 // db와 연결해주는 모듈

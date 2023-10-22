@@ -31,7 +31,7 @@ const getCustomer = (req, res) =>{
                 httpOnly: true
             };
             const token = jwt.sign({
-                id: member.userid,
+                userid: member.userid,
                 name: member.nickname,
                 serialID: member.id,
             },'ksg',{
