@@ -39,7 +39,7 @@
     <div>
     <b-table striped hove :items="items" :fields="fields" @row-clicked="Click"></b-table>
     </div>
-    <v-btn class="mr-4"  color="grey darken-2" @click="fnWrite" v-if ="$store.state.account.id">글쓰기 </v-btn>
+    <v-btn class="mr-4"  color="grey darken-2" @click="fnWrite">글쓰기 </v-btn>
     <div class="post-search">
           <v-text-field input type="text" name="contents" cols="3" rows="3" required v-model="searchbar"
             class="w3-input w3-border" style="resize: none;"></v-text-field>
@@ -55,6 +55,9 @@
 </template>
 
 <script>
+
+//    <v-btn class="mr-4"  color="grey darken-2" @click="fnWrite" v-if ="$store.state.account.id">글쓰기 </v-btn>
+
 //        <v-btn type="button" class="w3-button w3-round w3-blue-gray" v-on:click="searchbutton">검색</v-btn>
 /* eslint-disable */
 

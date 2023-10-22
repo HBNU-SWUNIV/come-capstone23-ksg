@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {store}  from '../../main';
+import {store}  from '../../main.js';
 export default {
   data() {
     return {
@@ -52,8 +52,8 @@ export default {
         this.$http.post("/api/login", this.user)
                 .then(res => {
                     console.log('send success!');
-                    store.commit('setAccount', res.data.userid);
-                    alert("환영합니다.")
+                    store.commit('setAccount', res.data.id);
+                    alert(store.state.account.id)
                     this.$router.push({
                      path: '/'
                     })

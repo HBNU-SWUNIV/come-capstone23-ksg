@@ -7,7 +7,7 @@
                     <strong>제목: {{ board.title }}</strong> - <i>작성자: {{ board.writer }}</i>
                             [{{ board.year }}.{{ board.month }}.{{ board.day }}]
                     <div class="centered">
-                            <div class="border">
+                            <div class="border" id="lender">
                             {{ board.contents }}
                             </div>
                     <v-btn class="mr-4"  color="blue" @click="fnWrite" v-if ="$store.state.account.id">수정 </v-btn>
@@ -51,6 +51,7 @@ export default {
         var id = Number(this.$route.params.id);
         this.$http.get(`/api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
+            document.querySelector('#lender').innerHTML = this.board.contents;
         });
         this.$http.get(`/api/commentlist`).then(response => {
             this.comments = response.data;
