@@ -66,7 +66,8 @@ export default {
   created() {                                              // 조건 : 게시판에 들어왔을때 , 결과 : 백엔드에 게시글 목록 요청.
     this.$http.get("/api/boardlist").then(response => {
       let res_items = response.data.sort((a,b) => {return b.id-a.id})
-      this.items = res_items;                      // 번호, 제목, 작성자, 등록일
+      this.items = res_items;
+      this.items.reload = 2;                      // 번호, 제목, 작성자, 등록일
     });
   },
   data() {
