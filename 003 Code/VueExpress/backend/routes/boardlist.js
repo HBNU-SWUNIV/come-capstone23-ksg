@@ -13,6 +13,7 @@ app.use(cookieParser());
 // router.post('/email', control.SendEmail);
 
 router.get('/', function(req, res){
+    
     res.send(boards);
 });
 
@@ -21,8 +22,24 @@ router.get('/id/:id', function(req, res){                             // 게시�
     const id = parseInt(req.params.id, 10);
     const board = boards.filter(function(board){
         return board.id === id;
+        
     });
+    var content = board[0].contents;
+     content = content.replace(/snake\/[\w]*.[\w]*/gi, 
+     'filters/filters_snake.png');
+    board[0].contents= content    
+    console.log(content);
+    res.send(board);
+});
+
+router.get('/true/:id', function(req, res){
+    const id = parseInt(req.params.id, 10);
+    const board = boards.filter(function(board){
+        return board.id === id;
+    });
+    
     console.log(board);
+    res.set('Cache-Control', 'no-store'); // Cache-Control 헤더
     res.send(board);
 });
 
@@ -48,7 +65,8 @@ router.post('/:upload', async function(req, res){
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
     board.writer = decoded.name;
-
+    
+    
     // get path
     const myPath = path.join(__dirname, '..', 'data', 'board.json');
 
@@ -57,7 +75,7 @@ router.post('/:upload', async function(req, res){
         let parsedData = JSON.parse(data);
         parsedData.push(board);
         fs.writeFile(myPath, JSON.stringify(parsedData), (err)=>{
-            if (err) throw err;
+            if (err) throw err;a
             console.log('boards update complete!');
             res.send('end');
         });
