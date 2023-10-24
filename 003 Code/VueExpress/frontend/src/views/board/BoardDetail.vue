@@ -122,26 +122,26 @@ export default {
           this.$router.go(this.$router.currentRoute);
       },
       fndelete(){
+        var id = this.$route.params.id;
         this.$http.delete(`/api/boardlist/id/${id}`, this.board)
-              .then(res => {
-                  console.log('upload success!');
-                  alert("게시글이 삭제되었습니다.")
-              })
-      },
+          .then(res => {
+              console.log('delete success!');
+              alert("게시글이 삭제되었습니다.")
+          })
+          .catch(err => {
+              console.error('delete fail!', err);
+              alert("게시글 삭제에 실패하였습니다.");
+          });
+       },
 
-      fnnofilter(){
-        this.tf=
-        this.$router.go(
-            {
-        name: "Params",
-        params: { id : this.id, reload: 1 },
-      }
-
-        );
-
-      }
-  }
-  
+      fnnofilter() {
+        var id = this.$route.params.id;
+        this.$http.get(`/api/boardlist/true/${id}`).then(response => {
+            this.board = response.data[0];
+            document.querySelector('#lender').innerHTML = this.board.contents;
+        });
+        }
+    }
 };
 
 
