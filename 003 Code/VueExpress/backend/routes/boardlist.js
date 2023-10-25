@@ -1,47 +1,43 @@
 const express = require('express');
 const router = express.Router();
-let boards = require('../data/board.json');
+const boards = require('../data/board.json');
+const boards_original = require('../data/board.json');
+
 const jwt = require('jsonwebtoken');
 const app = express();
 const cookieParser = require('cookie-parser');
-const fs = require('fs');
+const fs = require('fs');                                       // 게시글 저장용 임시
 const path = require('path'); 
 const control = require('../src/customer/control');
 
-app.use(cookieParser());
 
-function reloadBoards() {
-    delete require.cache[require.resolve('../data/board.json')]; // 이전에 캐시된 데이터를 삭제
-    boards = require('../data/board.json'); // 데이터를 새로 로드
-}
+app.use(cookieParser());
+// router.post('/email', control.SendEmail);
 
 router.get('/', function(req, res){
+    
     res.send(boards);
 });
 
-router.get('/id/:id', function(req, res){
+
+router.get('/id/:id', function(req, res){                             // 게시글 번호로 검색 했을 시 해당 번호 작성글 리턴
     const id = parseInt(req.params.id, 10);
     const board = boards.filter(function(board){
         return board.id === id;
+        
     });
-    var content = board[0].contents;
-    content = content.replace(/snake\/[\w]*.[\w]*/gi, 'filters/filters_snake.png');
-    board[0].contents= content;   
-    console.log(content);
     res.send(board);
 });
-
-router.get('/true/:id', function(req, res){
-    reloadBoards(); // 원본 데이터를 최신 상태로 로드
+router.get('/true/:id', function(req, res){                             // 게시글 번호로 검색 했을 시 해당 번호 작성글 리턴
     const id = parseInt(req.params.id, 10);
-    const board = boards.filter(function(board){
+    const board = boards_original.filter(function(board){
         return board.id === id;
     });
-    res.set('Cache-Control', 'no-store');
+    
+    console.log(board);
     res.send(board);
 });
-
-router.get('/writer/:writer', function(req, res){
+router.get('/writer/:writer', function(req, res){                                  // 작성자 이름으로 검색 했을 때.
     const boardwriter = req.params.writer ;
     const board = boards.filter(function(board){
         return board.writer === boardwriter;
@@ -49,7 +45,8 @@ router.get('/writer/:writer', function(req, res){
     res.send(board);
 });
 
-router.get('/:title', function(req, res){
+
+router.get('/:title', function(req, res){                             // 게시글 제목으로 검색
     const boardtitle = req.params.title;
     const board = boards.filter(function(board){
         return board.title === boardtitle;
@@ -62,26 +59,29 @@ router.post('/:upload', async function(req, res){
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
     board.writer = decoded.name;
-
+    
+    
+    // get path
     const myPath = path.join(__dirname, '..', 'data', 'board.json');
 
-    fs.readFile(myPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error("Error reading the file:", err);
-            return res.status(500).send("Error reading the file.");
-        }
+    // read file
+    fs.readFile(myPath, 'utf8', (err, data)=>{
         let parsedData = JSON.parse(data);
         parsedData.push(board);
-        fs.writeFile(myPath, JSON.stringify(parsedData), (err) => {
-            if (err) {
-                console.error("Error writing the file:", err);
-                return res.status(500).send("Error writing the file.");
-            }
+        fs.writeFile(myPath, JSON.stringify(parsedData), (err)=>{
+            if (err) throw err;a
             console.log('boards update complete!');
-            reloadBoards(); // 파일을 수정한 후 데이터를 다시 로드
             res.send('end');
         });
     });    
 });
+
+
+// router.get('/', control.getboard);
+// router.get('/id/:id', control.getboarddetail);
+// router.get('/writer/:writer', control.searchwriter);
+// router.post('/:upload', control.registerboard); 
+// router.get('/:title', control.searchtitle); 
+
 
 module.exports = router;
