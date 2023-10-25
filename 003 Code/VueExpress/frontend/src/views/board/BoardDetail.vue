@@ -54,12 +54,20 @@ export default {
     created: function () {
         var id = Number(this.$route.params.id);
         tf = this.$route.params.id
-        alert(tf)
         if(tf >0)
         this.$http.get(`api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
-            document.querySelector('#lender').innerHTML = this.board.contents;
-            
+            var content = this.board.contents;
+            content = content.replace(/snake\/[\w]*.[\w]*/gi, 
+            'filters/filters_snake.png');
+            content = content.replace(/Spider\/[\w]*.[\w]*/gi, 
+            'filters/filters_snake.png');
+            content = content.replace(/mouse\/[\w]*.[\w]*/gi, 
+            'filters/filters_snake.png');
+         
+            this.board.contents = content;
+
+            document.querySelector('#lender').innerHTML = this.board.contents;    
         });
         else{
             this.$http.get(`/api/boardlist/true/${id}`).then(response => {
@@ -135,15 +143,18 @@ export default {
 
       fnnofilter() {
         var id = this.$route.params.id;
-        this.$http.get(`/api/boardlist/true/${id}`).then(response => {
+        this.$http.get(`api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
             document.querySelector('#lender').innerHTML = this.board.contents;
+            alert("사진 필터링이 해제되었습니다!");
             console.log("Successfully fetched unfiltered data:", response.data);
             this.$forceUpdate();
         });
         }
     }
 };
+
+
 
 
 </script>
