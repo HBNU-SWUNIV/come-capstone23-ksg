@@ -1,7 +1,6 @@
 <template>
     <div>
 
-        <h1>상세 내용</h1>
         <div class="container">
             <div class="outer">
                 <div class="inner">
@@ -15,7 +14,7 @@
                             
                     <v-btn class="mr-4"  color="blue" @click="fnWrite" v-if ="$store.state.account.id">수정 </v-btn>
                     <v-btn class="mr-4"  color="red" @click="fndelete" v-if ="$store.state.account.id">삭제 </v-btn>
-                    <v-btn class="mr-4"  color="red"  v-on:click="fnnofilter()">필터제거 </v-btn>
+                    <v-btn class="mr-4"  color="red"  v-on:click="fnnofilter()">필터 제거 </v-btn>
                     </div>
 
                     <div class="comment" v-for="comment in comments" :key="comment.id">
@@ -40,7 +39,7 @@
                         </div>
                     </form>
 
-                    <router-link :to="{ name: 'List' }">돌아가기</router-link>
+                    <v-btn class="mr-4" color="grey darken-2" :to="{ name: 'List' }">돌아가기</v-btn>
                     
                 </div>
             </div>
@@ -139,6 +138,8 @@ export default {
         this.$http.get(`/api/boardlist/true/${id}`).then(response => {
             this.board = response.data[0];
             document.querySelector('#lender').innerHTML = this.board.contents;
+            console.log("Successfully fetched unfiltered data:", response.data);
+            this.$forceUpdate();
         });
         }
     }
