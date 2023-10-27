@@ -27,10 +27,12 @@
 <img alt="Node.js" src ="https://img.shields.io/badge/Node.js-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=white"/> 
 <img alt="javascript" src ="https://img.shields.io/badge/javascript-F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=white"/> 
 
-이미지 모델 분류
+이미지 분류 모델
 <img alt="pytorch" src ="https://img.shields.io/badge/pytorch-EE4C2C.svg?&style=for-the-badge&logo=Pytorch&logoColor=white"/> 
 <img alt="flask" src ="https://img.shields.io/badge/flask-000000.svg?&style=for-the-badge&logo=flask&logoColor=white"/> 
 <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> 
+
+이미지 분류모델은 Resnet 모델을 전이학습시켜 사용하였고, 캐글의 상업적 이용이 허용된 데이터셋을 활용했다.
 
 DB
 <img alt="MariaDB" src ="https://img.shields.io/badge/MariaDB-003545.svg?&style=for-the-badge&logo=MariaDB&logoColor=white"/>
