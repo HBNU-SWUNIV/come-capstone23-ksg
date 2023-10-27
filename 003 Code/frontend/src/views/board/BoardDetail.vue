@@ -58,12 +58,19 @@ export default {
         this.$http.get(`api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
             var content = this.board.contents;
-            content = content.replace(/snake\/[\w]*.[\w]*/gi, 
+             content = content.replace(/snake\/[\w]*.[\w]*/gi, 
             'filters/filters_snake.png');
             content = content.replace(/Spider\/[\w]*.[\w]*/gi, 
-            'filters/filters_snake.png');
+            'filters/filters_spider.png');
             content = content.replace(/mouse\/[\w]*.[\w]*/gi, 
-            'filters/filters_snake.png');
+            'filters/filters_mouse.png');
+            content = content.replace(/centipede\/[\w]*.[\w]*/gi, 
+            'filters/filters_centipede.png');
+            content = content.replace(/worm\/[\w]*.[\w]*/gi, 
+            'filters/filters_worm.png');
+            content = content.replace(/scorpion\/[\w]*.[\w]*/gi, 
+            'filters/filters_scorpion.png');
+            
          
             this.board.contents = content;
 
