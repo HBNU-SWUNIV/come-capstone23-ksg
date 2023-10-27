@@ -8,38 +8,28 @@ const { token } = require('morgan');
 const app = express();
 app.use(cookieParser());
 const getCustomer = (req, res) =>{
-    const userinfo = {
-        id:"",
-        pw: "",
-        name:""
-    }
-    pool.query(queries.getCustomer ,(error, results) =>{
+    userid=req.body.id;
+    userpw=req.body.pw;
+
+    pool.query(queries.getCustomer ,[userid, userpw], function(error, results, fields) {
         if (error) throw error;
-        
-        const {id,pw} = req.body;
-        users = results.rows;
-        const member = users.find(m => m.userid === id && m.userpw == pw);
-        if(member) {
-
-            userinfo.id = member.userid;
-            userinfo.pw = member.userpw;
-            userinfo.name = member.nickname;
-
+        if(results.length > 0) {
             const Options = {
                 domain:"localhost",
                 Path:"/",
                 httpOnly: true
             };
             const token = jwt.sign({
-                userid: member.userid,
-                name: member.nickname,
-                serialID: member.id,
+                userid: results[0].userid,
+                name: results[0].nickname,
+                serialID: results[0].id,
             },'ksg',{
                 expiresIn:"20m",
                 issuer:"majorleague"
             });
+            console.log(results[0].userid);
             res.cookie("token", token,Options);
-            res.status(200).json(member);
+            res.status(200).json(results[0]);
         }
         else {
             res.send(404);
@@ -48,7 +38,7 @@ const getCustomer = (req, res) =>{
     });
 }
 const getpassword = (req, res) =>{
-    pool.query(queries.getCustomer, (error, results) =>{
+    pool.query(queries.getCustomer, function(error, results, fields){
         if (error) throw error;
         const {email} = req.body;
         users = results.rows;
@@ -72,7 +62,7 @@ const registercomment = (req, res) =>{
     month = req.body.month;
     day = req.body.day;
     contents = req.body.contents;
-    pool.query(queries.registercomment, [ boardid, writer , year , month,day,contents,customerid],(error,results) => {
+    pool.query(queries.registercomment, [ boardid, writer , year , month,day,contents,customerid] ,function(error, results, fields) {
         if(error) throw error;
         res.status(201).send("댓글이 등록되었습니다..");
     });
@@ -80,7 +70,7 @@ const registercomment = (req, res) =>{
 }
 const getcommentdetail=(req , res) =>{
     const boardid = parseInt(req.params.id);
-    pool.query(queries.getcommentdetail, [boardid],(error, results) =>{
+    pool.query(queries.getcommentdetail, [boardid],function(error, results, fields) {
         if (error) throw error;
         comments = JSON.stringify(results.rows);
         
@@ -95,7 +85,7 @@ const getcommentdetail=(req , res) =>{
         });
 }
 const getcommentlist=(req , res) =>{
-    pool.query(queries.getcommentlist ,(error, results) =>{
+    pool.query(queries.getcommentlist ,function(error, results, fields){
         if (error) throw error;
        
         comments = JSON.stringify(results.rows);
@@ -118,7 +108,7 @@ const registerCustomer=(req , res) =>{
     email = req.body.email;
     console.log("....");
 
-      pool.query(queries.registerCustomer, [ userid , userpw , nickname , email],(error,results) => {
+      pool.query(queries.registerCustomer, [ userid , userpw , nickname , email],function(error, results, fields) {
         if(error) throw error;
         res.status(201).send("회원가입이 완료되었습니다.");
     });
@@ -133,31 +123,22 @@ const registerboard=(req , res) =>{
     day = req.body.day;
     title = req.body.title;
     contents = req.body.contents;
-    pool.query(queries.registerboard, [ writer , year , month,day,title,contents,customerid],(error,results) => {
+    pool.query(queries.registerboard, [writer , year , month,day,title,contents,customerid],function(error, results, fields) {
         if(error) throw error;
         res.status(201).send("게시글이 등록되었습니다..");
     });
 }
 const getboarddetail=(req , res) =>{
     const boardid = parseInt(req.params.id);
-    pool.query(queries.getboarddetail, [boardid],(error, results) =>{
+    pool.query(queries.getboarddetail, [boardid],function(error, results, fields){
         if (error) throw error;
-        boards = JSON.stringify(results.rows);
-        
-        const obj = JSON.parse(boards, function(k, v) {
-            if (k === "boardid") {
-                this.id = v;
-                return; 
-            }
-            return v;
-        });
-        res.send(obj);
+        res.send(results);
         });
 }
 
 const searchwriter=(req , res) =>{
     const boardwriter = req.params.writer ;
-    pool.query(queries.searchwriter, ["%"+boardwriter+"%"],(error, results) =>{
+    pool.query(queries.searchwriter, ["%"+boardwriter+"%"],function(error, results, fields){
         if (error) throw error;
             res.status(200).json(results.rows);
         });
@@ -165,25 +146,18 @@ const searchwriter=(req , res) =>{
 
 const searchtitle=(req , res) =>{
     const boardtitle = req.params.title;
-    pool.query(queries.searchtitle, ["%"+boardtitle+"%"],(error, results) =>{
+    pool.query(queries.searchtitle, ["%"+boardtitle+"%"],function(error, results, fields){
         if (error) throw error;
             res.status(200).json(results.rows);
         });
 }
 const getboard=(req , res) =>{
-    pool.query(queries.getboard ,(error, results) =>{
+    pool.query(queries.getboard ,function(error, results, fields){
         if (error) throw error;
-       
-        boards = JSON.stringify(results.rows);
+        console.log();
+        res.send(results);
+
         
-        const obj = JSON.parse(boards, function(k, v) {
-            if (k === "boardid") {
-                this.id = v;
-                return; 
-            }
-            return v;
-        });
-        res.send(obj);
     });
 }
 /*

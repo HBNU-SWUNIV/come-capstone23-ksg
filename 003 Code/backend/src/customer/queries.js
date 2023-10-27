@@ -1,18 +1,18 @@
-const getCustomer ="SELECT * FROM customer";
-const registerCustomer =  "INSERT INTO customer (userid,userpw,nickname,email) VALUES ($1, $2, $3, $4)";
+const getCustomer ="SELECT * FROM customer WHERE userid = ? AND userpw = ?";
+const registerCustomer =  "INSERT INTO customer (userid,userpw,nickname,email) VALUES (?, ?, ?, ?)";
 
 const getboard ="SELECT * FROM board";
 const registerboard = 
- "INSERT INTO board (writer,year,month,day,title,contents,customerid) VALUES ($1,$2,$3,$4,$5,$6,$7)";
+ "INSERT INTO board (writer,year,month,day,title,contents,customerid) VALUES (?,?,?,?,?,?,?)";
 
  const registercomment = 
- "INSERT INTO comment (boardid,writer,year,month,day,contents,customerid) VALUES ($1,$2,$3,$4,$5,$6,$7)";
+ "INSERT INTO comment (boardid,writer,year,month,day,contents,customerid) VALUES (?,?,?,?,?,?,?)";
 
- const getcommentdetail ="SELECT * FROM comment WHERE boardid = $1";
+ const getcommentdetail ="SELECT * FROM comment WHERE boardid = ?";
  const getcommentlist ="SELECT * FROM comment";
-const getboarddetail = "SELECT * FROM board WHERE id = $1";
-const searchwriter = "SELECT * FROM board WHERE writer LIKE $1";
-const searchtitle = "SELECT * FROM board WHERE title LIKE $1";
+const getboarddetail = "SELECT * FROM board WHERE id = ?";
+const searchwriter = "SELECT * FROM board WHERE writer LIKE ?";
+const searchtitle = "SELECT * FROM board WHERE title LIKE ?";
 
 
 module.exports = {
