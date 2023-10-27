@@ -21,6 +21,7 @@
 백엔드
 <img alt="Node.js" src ="https://img.shields.io/badge/Node.js-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=white"/> 
 <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> 
+<img alt="pytorch" src ="https://img.shields.io/badge/pytorch-#EE4C2C.svg?&style=for-the-badge&logo=Pytorch&logoColor=white"/> 
 
 DB
 <img alt="MariaDB" src ="https://img.shields.io/badge/MariaDB-003545.svg?&style=for-the-badge&logo=MariaDB&logoColor=white"/>
