@@ -17,9 +17,11 @@
 ## System Design
 프론트엔드
 <img alt="Vue.js" src ="https://img.shields.io/badge/Vue.js-4FC08D.svg?&style=for-the-badge&logo=Vue.js&logoColor=white"/> 
+
 백엔드
 <img alt="Node.js" src ="https://img.shields.io/badge/Node.js-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=white"/> 
 <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> 
+
 DB
 <img alt="MariaDB" src ="https://img.shields.io/badge/MariaDB-003545.svg?&style=for-the-badge&logo=MariaDB&logoColor=white"/>
 ![ksg_구성도](https://github.com/HBNU-SWUNIV/come-capstone23-ksg/assets/127067579/cf56ec19-e80e-4c55-8f0f-3ed7220bef59)
