@@ -20,6 +20,7 @@
 <img alt="vuetify" src ="https://img.shields.io/badge/vuetify-1867C0.svg?&style=for-the-badge&logo=vuetify&logoColor=white"/> 
 <img alt="axios" src ="https://img.shields.io/badge/axios-5A29E4.svg?&style=for-the-badge&logo=axios&logoColor=white"/> 
 <img alt="javascript" src ="https://img.shields.io/badge/javascript-F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=white"/> 
+<img alt="postcss" src ="https://img.shields.io/badge/postcss-DD3A0A.svg?&style=for-the-badge&logo=postcss&logoColor=white"/> 
 
 
 백엔드
