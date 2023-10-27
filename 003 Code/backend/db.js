@@ -1,15 +1,15 @@
 const maria = require('mysql');
 
 
-const conn = maria.createConnection({
+const pool = maria.createConnection({
     host:'localhost',
     port:3306,
-    user:'',
-    passwod:'ksg5678!',
-    database:'projectDB',
+    user:'ksg',
+    password:'Wildturkey101',
+    database:'projectDB'
 });
 
-module.exports = conn;
+module.exports = pool;
 
 
 
