@@ -7,6 +7,7 @@ import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
 import Register from "@/views/common/Register"
 import About from '@/views/PageAbout.vue'
+import Mypage from '@/views/MyPage.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/mypage',
+      name: 'Mypage',
+      component: Mypage
     },
   ]
 })
