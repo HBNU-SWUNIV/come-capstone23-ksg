@@ -26,6 +26,7 @@
     </div>
 
     <v-btn class="mr-4" color="grey darken-2" @click="fnWrite">글쓰기</v-btn>
+    <v-btn class="mr-6"  color="grey darken-2" @click="TopicSort">주제 추출 </v-btn>
 
     <!-- 검색 창 -->
     <div class="post-search">
@@ -117,6 +118,13 @@ export default {
         path: './write'
       })
     },
+
+    TopicSort() {                               
+        this.$http.get("/api/boardlist/topic").then(response => {
+        let res_log = response.data
+        console.log(res_log)
+      })}
+      ,    
 
     searchbutton() {                            // 검색 버튼이 눌렸을 시
       var key = this.searchbar;
