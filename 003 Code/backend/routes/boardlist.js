@@ -8,6 +8,8 @@ const fs = require('fs');
 const path = require('path'); 
 const control = require('../src/customer/control');
 
+var httpProxy  = require('http-proxy');
+
 app.use(cookieParser());
 
 function reloadBoards() {
@@ -47,6 +49,18 @@ router.get('/writer/:writer', function(req, res){
         return board.writer === boardwriter;
     });
     res.send(board);
+});
+
+router.get('/:topic', function(req, res){
+
+    var proxy = httpProxy.createProxyServer({
+        target: 'http://127.0.0.1:8097'
+      });
+
+    proxy.web(req,res)
+    res = "주제 추출 시작"
+    res.send(res)
+
 });
 
 router.get('/:title', function(req, res){
