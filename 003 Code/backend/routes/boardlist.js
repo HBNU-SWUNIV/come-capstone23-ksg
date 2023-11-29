@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const fs = require('fs');
 const path = require('path'); 
 const control = require('../src/customer/control');
-
 var httpProxy  = require('http-proxy');
 
 app.use(cookieParser());
@@ -26,10 +25,7 @@ router.get('/id/:id', function(req, res){
     const board = boards.filter(function(board){
         return board.id === id;
     });
-    var content = board[0].contents;
-    content = content.replace(/snake\/[\w]*.[\w]*/gi, 'filters/filters_snake.png');
-    board[0].contents= content;   
-    console.log(content);
+   
     res.send(board);
 });
 
@@ -96,6 +92,59 @@ router.post('/:upload', async function(req, res){
             res.send('end');
         });
     });    
+   
 });
+router.post('/modify/upload', async function(req, res){
+    let board = req.body;
+    let decoded;
+    decoded = jwt.verify(req.cookies.token, "ksg");
+    board.writer = decoded.name;
 
+    const myPath = path.join(__dirname, '..', 'data', 'board.json');
+    console.log('modify');
+    fs.readFile(myPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading the file:", err);
+            return res.status(500).send("Error reading the file.");
+        }
+        let parsedData = JSON.parse(data);
+        var idx = parsedData.findIndex(function(key){return key["id"]===req.body.id});
+        parsedData[idx].contents = req.body.contents;
+        parsedData[idx].title = req.body.title;
+        fs.writeFile(myPath, JSON.stringify(parsedData), (err) => {
+            if (err) {
+                console.error("Error writing the file:", err);
+                return res.status(500).send("Error writing the file.");
+            }
+            console.log('boards update complete!');
+            res.send('end');
+        });
+    });    
+});
+router.delete('/id/:id', async function(req, res){
+    let board = req.body;
+    let decoded;
+    decoded = jwt.verify(req.cookies.token, "ksg");
+    board.writer = decoded.name;
+
+    const myPath = path.join(__dirname, '..', 'data', 'board.json');
+    console.log('modify');
+    fs.readFile(myPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error("Error reading the file:", err);
+            return res.status(500).send("Error reading the file.");
+        }
+        let parsedData = JSON.parse(data);
+        var idx = parsedData.findIndex(function(key){return key["id"]===req.body.id});
+        parsedData.splice(idx,idx);
+        fs.writeFile(myPath, JSON.stringify(parsedData), (err) => {
+            if (err) {
+                console.error("Error writing the file:", err);
+                return res.status(500).send("Error writing the file.");
+            }
+            console.log('boards update complete!');
+            res.send('end');
+        });
+    });    
+});
 module.exports = router;

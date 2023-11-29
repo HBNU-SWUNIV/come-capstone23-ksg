@@ -11,7 +11,7 @@ app.use(cookieParser());
 const fs = require('fs');                                       // 게시글 저장용 임시
 const path = require('path'); 
 
-
+/*
 router.get('/', function(req, res){
     res.send(comments);
 }); 
@@ -25,7 +25,7 @@ router.get('/id/:id', function(req, res){                             // 게시�
 }); 
 
 
-
+/*
 router.post('/:upload', function(req, res){
     let comment = req.body;
     let decoded;
@@ -46,10 +46,10 @@ router.post('/:upload', function(req, res){
     });    
 }); 
 
-
-// router.get('/', control.getcommentlist);
-// router.get('/id/:id', control.getcommentdetail);
-// router.post('/:upload', control.registercomment);
+*/
+ router.get('/', control.getcommentlist);
+ router.get('/id/:id', control.getcommentdetail);
+ router.post('/:upload', control.registercomment);
 
 /*
 router.get('/', function(req, res){

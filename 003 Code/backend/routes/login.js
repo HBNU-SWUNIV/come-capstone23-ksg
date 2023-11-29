@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
 app.use(cookieParser());
-  
+  /*
   router.post('/', function(req, res){                                              //전송 받음 user 정보
     const {id,pw} = req.body;
     const member = users.find(m => m.id === id && m.password == pw);
@@ -23,7 +23,7 @@ app.use(cookieParser());
             userid: member.id,
             name: member.name,
         },'ksg',{
-            expiresIn:"20m",
+            expiresIn:"1d",
             issuer:"majorleague"
         });
         res.cookie("token", token,Options);
@@ -36,7 +36,7 @@ app.use(cookieParser());
     //console.log(user.id, user.pw)
     //res.json({ user }) ;                 // res.json({ return 할 것 }) -> true, false 로만 보내는 게 좋아 보임
     
-}); 
+});*/ 
 /*
 router.post('/', function(req, res){         
     console.log(req.cookies);  
@@ -52,7 +52,7 @@ router.post('/', function(req, res){
     }
 });
 */
-// router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
+ router.post("/", control.getCustomer); // 요청을 control.js 에서 처리함
 
 /*
 router.get('/', function(req, res){                         // 요청이 들어오면 user의 [] 번째 데이터를 반환.

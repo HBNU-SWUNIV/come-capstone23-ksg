@@ -24,7 +24,7 @@ const getCustomer = (req, res) =>{
                 name: results[0].nickname,
                 serialID: results[0].id,
             },'ksg',{
-                expiresIn:"20m",
+                expiresIn:"1d",
                 issuer:"majorleague"
             });
             console.log(results[0].userid);
@@ -35,6 +35,35 @@ const getCustomer = (req, res) =>{
             res.send(404);
         }
         // res.status(200).json(results.rows);
+    });
+}
+
+const checknickname = (req, res) =>{
+    nickname=req.body.checkname;
+
+    pool.query(queries.checknickname ,[nickname], function(error, results, fields) {
+        if (error) throw error;
+        if(results.length > 0) {
+            res.send(404);
+        }
+        else {
+            console.log(results);
+            res.send(results);
+        }
+    });
+}
+const checkregister = (req, res) =>{
+    userid=req.body.IDcheck;
+
+    pool.query(queries.checkregister ,[userid], function(error, results, fields) {
+        if (error) throw error;
+        if(results.length > 0) {
+            res.send(404);
+        }
+        else {
+            console.log(results);
+            res.send(results);
+        }
     });
 }
 const getpassword = (req, res) =>{
@@ -55,49 +84,32 @@ const getpassword = (req, res) =>{
 const registercomment = (req, res) =>{
     let decoded;
     decoded = jwt.verify(req.cookies.token, "ksg");
-    boardid = req.body.id;
+    boardid =Number(req.body.id);
     customerid = decoded.serialID;
     writer = decoded.name;
     year = req.body.year;
-    month = req.body.month;
-    day = req.body.day;
+    month = Number(req.body.month);
+    day = Number(req.body.day);
     contents = req.body.contents;
-    pool.query(queries.registercomment, [ boardid, writer , year , month,day,contents,customerid] ,function(error, results, fields) {
+    pool.query(queries.registercomment, [customerid,boardid, writer , year , month,day,contents] ,function(error, results, fields) {
         if(error) throw error;
         res.status(201).send("댓글이 등록되었습니다..");
     });
         // res.status(200).json(results.rows);
 }
 const getcommentdetail=(req , res) =>{
-    const boardid = parseInt(req.params.id);
-    pool.query(queries.getcommentdetail, [boardid],function(error, results, fields) {
+    id = parseInt(req.params.id);
+    pool.query(queries.getcommentdetail, [id],function(error, results, fields) {
         if (error) throw error;
-        comments = JSON.stringify(results.rows);
-        
-        const obj = JSON.parse(comments, function(k, v) {
-            if (k === "boardid") {
-                this.id = v;
-                return; 
-            }
-            return v;
-        });
-        res.send(obj);
+        res.send(results);
+
         });
 }
 const getcommentlist=(req , res) =>{
     pool.query(queries.getcommentlist ,function(error, results, fields){
         if (error) throw error;
        
-        comments = JSON.stringify(results.rows);
-        
-        const obj = JSON.parse(comments, function(k, v) {
-            if (k === "boardid") {
-                this.id = v;
-                return; 
-            }
-            return v;
-        });
-        res.send(obj);
+        res.send(results);
     });
 }
   
@@ -198,4 +210,6 @@ module.exports ={
     registercomment,
     getcommentdetail,
     getcommentlist,
+    checkregister,
+    checknickname,
 }

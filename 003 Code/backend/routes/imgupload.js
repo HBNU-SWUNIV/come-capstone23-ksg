@@ -90,7 +90,7 @@ proxy.on('proxyRes', function (proxyRes, req, res) {
       return body; // return value can be a promise
   });
 });
-router.post('/averCF', async function(req, res) {
+router.post('/classfication', async function(req, res) {
   proxy.web(req, res);
 });
     
