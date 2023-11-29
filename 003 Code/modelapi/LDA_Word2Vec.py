@@ -73,18 +73,11 @@ def make_topictable_per_doc(model, corpus,df):
         doc = topic_list[0] if model.per_word_topics else topic_list
         doc = sorted(doc, key=lambda x: (x[1]), reverse=True)
         # 각 문서에 대해서 비중이 높은 토픽순으로 토픽을 정렬한다.
-        # EX) 정렬 전 0번 문서 : (2번 토픽, 48.5%), (8번 토픽, 25%), (10번 토픽, 5%), (12번 토픽, 21.5%),
-        # Ex) 정렬 후 0번 문서 : (2번 토픽, 48.5%), (8번 토픽, 25%), (12번 토픽, 21.5%), (10번 토픽, 5%)
-        # 48 > 25 > 21 > 5 순으로 정렬이 된 것.
-
-        #print(str(df['id'][i]) + ": df : id 값 ")
 
         # 모든 문서에 대해서 각각 아래를 수행
         for j, (topic_num, prop_topic) in enumerate(doc): #  몇 번 토픽인지와 비중을 나눠서 저장한다.
             if j == 0:  # 정렬을 한 상태이므로 가장 앞에 있는 것이 가장 비중이 높은 토픽
                 topic_table = topic_table._append(pd.Series([int(df['id'][i]), int(topic_num), round(prop_topic,4), topic_list]), ignore_index=True)
-                #topic_table = topic_table._append(pd.Series([int(topic_num), round(prop_topic,4), topic_list]), ignore_index=True)
-                #topic_table = topic_table.concat([topic_table, pd.DataFrame([int(topic_num), round(prop_topic,4), topic_list])], ignore_index=True)
                 # 가장 비중이 높은 토픽과, 가장 비중이 높은 토픽의 비중과, 전체 토픽의 비중을 저장한다.
             else:
                 break
@@ -129,7 +122,7 @@ def topic_match_to_json(topictable, temp_total_word) :
 
                 data_writing[i]['subject'] = temp_total_word[temp_int[0]]
             except:
-                data_writing[i]['subject'] = '식별 불가 code 2'
+                data_writing[i]['subject'] = 'out of vocabulary'
 
         
         file.seek(0)
@@ -191,12 +184,15 @@ def get():
     lda_visualization = gensimvis.prepare(model, corpus, dictionary, sort_topics=False,mds='mmds')
 
     topictable = make_topictable_per_doc(model, corpus,df)
-    topictable = topictable.reset_index() # 문서 번호을 의미하는 열(column)로 사용하기 위해서 인덱스 열을 하나 더 만든다.
+    topictable = topictable.reset_index()
     topictable.columns = ['id', 'doc', 'highest_topic', 'percent', 'percent_per']
+
+    topictable[:50]
+
 
     result_topic_list = print_topic_words(model)
 
-    loaded_model = KeyedVectors.load_word2vec_format('C:/workspace/VueExpress/modelapi/word2vec_model') 
+    loaded_model = KeyedVectors.load_word2vec_format('C:/workspace/VueExpress/modelapi/word2vec_model')
 
     total_topic_list = only_print_topice_word(model, loaded_model, result_topic_list)
 
@@ -204,14 +200,14 @@ def get():
 
     for i in range (len(result_topic_list)):
         try:
-            total_word = loaded_model.most_similar(positive= (loaded_model.most_similar(positive=result_topic_list[i],topn=10) ), topn=3 )
+            total_word = loaded_model.most_similar(positive= (loaded_model.most_similar(positive=result_topic_list[i],negative=["광양시"],topn=10) ), topn=3 )
             print(total_word)
             temp_total_word.append(total_word[0][0] + ", " + total_word[1][0] + ", "  +total_word[2][0])
         except KeyError as ke:
-            print("! KeyError 발생 !") 
-            temp_total_word.append("식별 불가")
+            temp_total_word.append("out of vocabulary")
 
     topic_match_to_json(topictable, temp_total_word)
+    print(total_topic_list)
 
     return None
 

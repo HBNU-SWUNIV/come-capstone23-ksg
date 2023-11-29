@@ -9,7 +9,6 @@ import io
 from pandas import DataFrame
 from konlpy.tag import Mecab
 from tqdm import tqdm
-mecab = Mecab('C:/mecab/share/mecab-ko-dic')
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 app = Flask(__name__)
 currentPath=os.getcwd()
