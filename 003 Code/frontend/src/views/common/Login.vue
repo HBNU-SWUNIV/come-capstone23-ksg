@@ -53,8 +53,8 @@ export default {
         this.$http.post("/api/login", this.user)
                 .then(res => {
                     console.log('send success!');
-                    store.commit('setAccount', res.data.id);
-                    alert(store.state.account.id)
+                    store.commit('setAccount', res.data.nickname);
+                    alert(store.state.account.id +'님 환영합니다.');
                     this.$router.push({
                      path: '/'
                     })

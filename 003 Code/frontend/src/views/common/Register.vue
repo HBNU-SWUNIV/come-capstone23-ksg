@@ -3,11 +3,14 @@
 		<form @submit.prevent="fnSubmit">
             <div class="form-group" align ="left">
 				<label for="ID">아이디</label>
-				<input class="form-control" id="ID" placeholder="아이디를 입력해주세요" maxlength="20" v-model="regi.ID" type="text">
+				<input class="form-control" id="ID" placeholder="아이디를 입력해주세요" maxlength="20" v-model="regi.IDcheck" type="text">
 			</div>
+			    <v-btn class="mr-4" color="grey darken-2" @click="fnidcheck">ID중복확인</v-btn>
             <div>
                 <span v-if="!idValid">잘못된 아이디입니다.</span>
+				<span v-if="!overlapFlag">중복된 아이디입니다. 다른 아이디를 사용해주세요</span>
             </div>
+			현재 설정된 아이디: {{ regi.ID }}
 
             <div class="form-group" align ="left">
 				
@@ -28,12 +31,15 @@
 
             <div class="form-group" align ="left">
 				<label for="name">닉네임</label>
-				<input class="form-control" type="text" id="name" placeholder="닉네임을 입력해주세요" maxlength="16" @blur="nameValid" v-model="regi.name" />
+				<input class="form-control" type="text" id="name" placeholder="닉네임을 입력해주세요" maxlength="16" @blur="nameValid" v-model="regi.checkname" />
 			</div>
+						    <v-btn class="mr-4" color="grey darken-2" @click="fnnicknamecheck">닉네임중복확인</v-btn>
+
 			<div>
                 <span v-if="!nameValidFlag">닉네임을 입력해주세요.</span>
+				<span v-if="!overlapFlagnickname">중복된 닉네임입니다. 다른 닉네임을 사용해주세요</span>
             </div>
-
+			현재 설정된 닉네임: {{ regi.name }}
             <div class="form-group" align ="left">
 				<label for="email">이메일</label>
 				<input class="form-control" type="text" id="email" placeholder="이메일을 입력해주세요" maxlength="100" @blur="emailValid" v-model="regi.email" />
@@ -54,9 +60,11 @@ export default {
 	data() {
 		return {
             regi: {
+				IDcheck: null,
                 ID: null,
 			    password: null,
 			    name: null,
+				checkname:null,
                 email: null,
             },
 			passwordCheck: null,
@@ -64,7 +72,9 @@ export default {
 			pwCheckFlag: true,
 			nameValidFlag: true,
 			emailValidFlag: true,
-			RegisterFlag: true
+			RegisterFlag: true,
+			overlapFlag: true,
+			overlapFlagnickname: true,
 		}
 	},
 	methods: {
@@ -83,7 +93,7 @@ export default {
       		}
     	},
 		nameValid () { // 입력하지 않으면 false
-            if (/^.{1,20}$/.test(this.regi.name)) {
+            if (/^.{1,20}$/.test(this.regi.checkname)) {
                 this.nameValidFlag = true
             } else {
                 this.nameValidFlag = false
@@ -105,6 +115,8 @@ export default {
 				this.pwValidFlag == true &&
 				this.pwCheckFlag == true &&
 				this.nameValidFlag == true &&
+				this.overlapFlag == true &&
+				this.overlapFlagnickname == true &&
 				this.emailValidFlag == true ) {
 					this.RegisterFlag = true
 					console.log('submit')}
@@ -121,6 +133,28 @@ export default {
 
 			
 		},
+		fnidcheck() {
+			this.$http.post('/api/register/check', this.regi).then(res => {
+				 this.overlapFlag = true;
+				 this.regi.ID = this.regi.IDcheck;
+         		 alert("사용가능한 아이디입니다.");
+      			}).catch(() => {
+					this.overlapFlag = false;
+                    alert("id가 이미 존재합니다.");
+                });
+
+		},
+
+		fnnicknamecheck() {
+			this.$http.post('/api/register/checknickname', this.regi).then(res => {
+				 this.overlapFlagnickname = true;
+				 this.regi.name = this.regi.checkname;
+         		 alert("사용가능한 닉네임입니다.");
+      			}).catch(() => {
+					this.overlapFlagnickname = false;
+                    alert("닉네임이 이미 존재합니다.");
+                });
+		}
 
 		// 아이디 이미 존재하는 지 비교 여부 필요 
 	},

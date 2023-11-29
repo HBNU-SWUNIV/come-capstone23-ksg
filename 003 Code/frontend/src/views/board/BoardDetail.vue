@@ -12,8 +12,8 @@
                             </div>
                         
                             
-                    <v-btn class="mr-4"  color="blue" @click="fnWrite" v-if ="$store.state.account.id">수정 </v-btn>
-                    <v-btn class="mr-4"  color="red" @click="fndelete" v-if ="$store.state.account.id">삭제 </v-btn>
+                    <v-btn class="mr-4"  color="blue" @click="fnModify" v-if ="$store.state.account.id == board.writer">수정 </v-btn>
+                    <v-btn class="mr-4"  color="red" @click="fndelete" v-if ="$store.state.account.id == board.writer">삭제 </v-btn>
                     <v-btn class="mr-4"  color="red"  v-on:click="fnnofilter()">필터 제거 </v-btn>
                     </div>
 
@@ -49,6 +49,7 @@
 
 <script>
 /* eslint-disable */
+import {store}  from '../../main.js';
 var tf
 export default {
     created: function () {
@@ -58,19 +59,31 @@ export default {
         this.$http.get(`api/boardlist/id/${id}`).then(response => {
             this.board = response.data[0];
             var content = this.board.contents;
+
+            if(store.state.account.snake){
              content = content.replace(/snake\/[\w]*.[\w]*/gi, 
             'filters/filters_snake.png');
-            content = content.replace(/Spider\/[\w]*.[\w]*/gi, 
+            }
+            if(store.state.account.spider){
+                content = content.replace(/Spider\/[\w]*.[\w]*/gi, 
             'filters/filters_spider.png');
-            content = content.replace(/mouse\/[\w]*.[\w]*/gi, 
+            }
+            if(store.state.account.mouse){
+                content = content.replace(/mouse\/[\w]*.[\w]*/gi, 
             'filters/filters_mouse.png');
-            content = content.replace(/centipede\/[\w]*.[\w]*/gi, 
+            }
+            if(store.state.account.centipede){
+                content = content.replace(/centipede\/[\w]*.[\w]*/gi, 
             'filters/filters_centipede.png');
-            content = content.replace(/worm\/[\w]*.[\w]*/gi, 
+            }
+            if(store.state.account.worm){
+                content = content.replace(/worm\/[\w]*.[\w]*/gi, 
             'filters/filters_worm.png');
-            content = content.replace(/scorpion\/[\w]*.[\w]*/gi, 
+            }
+            if(store.state.account.scorpion){
+                content = content.replace(/scorpion\/[\w]*.[\w]*/gi, 
             'filters/filters_scorpion.png');
-            
+            }
          
             this.board.contents = content;
 
@@ -146,6 +159,7 @@ export default {
               console.error('delete fail!', err);
               alert("게시글 삭제에 실패하였습니다.");
           });
+          this.$router.push({ name: "List" });
        },
 
        fnnofilter() {
@@ -157,6 +171,10 @@ export default {
                 console.log("Successfully fetched unfiltered data:", response.data);
                 this.$forceUpdate();
             });
+        },
+        fnModify() {
+            var id = this.$route.params.id;
+            this.$router.push(`/board/modify/${id}`);
         }
     }
 };

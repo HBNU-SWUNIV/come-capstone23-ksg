@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <!-- 최상단 분류 -->
+    <div>
+        <label><input type="checkbox" value="지네" v-model="checked">지네</label>   
+        <label><input type="checkbox" value="뱀" v-model="checked">뱀</label>
+        <label><input type="checkbox" value="전갈" v-model="checked">전갈</label>
+        <label><input type="checkbox" value="거미" v-model="checked">거미</label>
+        <label><input type="checkbox" value="지렁이" v-model="checked">지렁이</label>
+        <label><input type="checkbox" value="쥐" v-model="checked">쥐</label>
+        <v-btn class="mr-4" color="grey darken-2" @click="fnsetting">설정</v-btn>
+    </div>
     <div class="board-header">
       <span>번호</span>
       <span>주제</span>
@@ -25,7 +34,7 @@
       <p>잠시만 기다려 주세요...</p>
     </div>
 
-    <v-btn class="mr-4" color="grey darken-2" @click="fnWrite">글쓰기</v-btn>
+    <v-btn class="mr-4" color="grey darken-2" @click="fnWrite" v-if="$store.state.account.id">글쓰기</v-btn>
     <v-btn class="mr-6"  color="grey darken-2" @click="TopicSort">주제 추출 </v-btn>
 
     <!-- 검색 창 -->
@@ -54,8 +63,34 @@
 </template>
 
 <script>
+import {store}  from '../../main.js';
 export default {
   created() {
+    if(store.state.account.snake)
+    {
+      this.checked.push('뱀');
+    }
+    if(store.state.account.centipede)
+    {
+      this.checked.push('지네');
+    }
+    if(store.state.account.mouse)
+    {
+      this.checked.push('쥐');
+    }
+    if(store.state.account.scorpion)
+    {
+      this.checked.push('전갈');
+    }
+    if(store.state.account.spider)
+    {
+      this.checked.push('거미');
+    }
+    if(store.state.account.worm)
+    {
+      this.checked.push('지렁이');
+    }
+    
     this.fetchData();
   },
 
@@ -87,6 +122,7 @@ export default {
           label: '일'
         }
       ],
+      checked: [],
       items: [],
       boards: [],
       searchbar: "",
@@ -124,7 +160,7 @@ export default {
         let res_log = response.data
         console.log(res_log)
       })}
-      ,    
+      ,  
 
     searchbutton() {                            // 검색 버튼이 눌렸을 시
       var key = this.searchbar;
@@ -220,6 +256,52 @@ export default {
       this.currentPage = pageNumber;
       this.fetchData();
     },
+    fnsetting() {                               
+      if (this.checked.includes('뱀'))
+      {
+        store.commit('setsnake', 1);
+      }
+      else{
+        store.commit('setsnake', 0);
+      }
+      if (this.checked.includes('지렁이'))
+      {
+        store.commit('setworm', 1);
+      }
+      else{
+        store.commit('setworm', 0);
+      }
+      if (this.checked.includes('지네'))
+      {
+        store.commit('setcentipede', 1);
+      }
+      else{
+        store.commit('setcentipede', 0);
+      }
+      if (this.checked.includes('전갈'))
+      {
+        store.commit('setscorpion', 1);
+      }
+      else{
+        store.commit('setscorpion', 0);
+      }
+      if (this.checked.includes('쥐'))
+      {
+        store.commit('setmouse', 1);
+      }
+      else{
+        store.commit('setmouse', 0);
+      }
+      if (this.checked.includes('거미'))
+      {
+        store.commit('setspider', 1);
+      }
+      else{
+        store.commit('setspider', 0);
+      }
+      alert("설정되었습니다.");
+    },
+
   },
 }
 </script>

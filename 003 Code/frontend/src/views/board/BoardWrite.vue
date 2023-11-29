@@ -7,7 +7,7 @@
 			</div>
     </div>
   <div id="editor" ref="edit"></div>
-  <div>
+  <div v-if="$store.state.account.id">
     <v-btn class="mr-4"  color="grey darken-2" @click="savePost()">글쓰기 </v-btn>
   </div>
 
@@ -22,6 +22,10 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import "@toast-ui/editor/dist/i18n/ko-kr";
 import axios from 'axios';
 export default {
+  created() {
+    
+    this.fetchData();
+  },
   
   data() {
       return {
@@ -33,6 +37,8 @@ export default {
               day : 0 ,
               title: "",
               contents: "",
+              image_tag:"",
+              subject:"",
           },
           response: "",
           editor: null
@@ -56,14 +62,14 @@ export default {
 
         try{
           
-            const response = await axios.post('api/imgupload/averCF', formData)
+            const response = await axios.post('api/imgupload/classfication', formData)
 
                try{
      
             const response = await axios.post('api/imgupload/img', formData)
 
             const filename = await response.data;
-            alert(`${response.data} 이미지가 등록되었습니다`);
+            alert(`이미지가 등록되었습니다`);
             const imageUrl = `http://localhost:3000/uploads/${filename}`;
                callback(imageUrl, 'image '); 
           } 
@@ -99,7 +105,6 @@ export default {
           this.board.month = month;
           this.board.day = day;
           this.board.contents = this.editor.getHTML();
-          alert(this.board.contents);
       try{
         const response = axios.post('api/boardlist/upload', this.board)
         alert("게시글이 저장되었습니다.")

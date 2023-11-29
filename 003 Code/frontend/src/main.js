@@ -22,14 +22,38 @@ export const store = new Vuex.Store({
   state() {
     return{
     account:{
-      id: 0
+      id: 0,
+      snake: 1,
+      mouse: 1,
+      scorpion: 1,
+      spider: 1,
+      worm: 1,
+      centipede: 1,
     }
   }
   },
   mutations: {
     setAccount(state,payload){
       state.account.id = payload;
-    }
+    },
+    setsnake(state,payload){
+      state.account.snake = payload;
+    },
+    setscorpion(state,payload){
+      state.account.scorpion = payload;
+    },
+    setmouse(state,payload){
+      state.account.mouse = payload;
+    },
+    setspider(state,payload){
+      state.account.spider = payload;
+    },
+    setcentipede(state,payload){
+      state.account.centipede = payload;
+    },
+    setworm(state,payload){
+      state.account.worm = payload;
+    },
   },
 
   plugins: [

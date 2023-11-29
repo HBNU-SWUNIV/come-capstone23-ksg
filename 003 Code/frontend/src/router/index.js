@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/views/PageHome.vue'
 import List from "@/views/board/BoardList"
 import Detail from "@/views/board/BoardDetail"
+import Modify from "@/views/board/Boardmodify"
 import Write from "@/views/board/BoardWrite"
 import Login from "@/views/common/Login"
 import Register from "@/views/common/Register"
@@ -42,6 +43,11 @@ export default new Router({
       path: '/board/write',
       name: 'Write',
       component: Write
+    },
+    {
+      path: '/board/modify/:id',
+      name: 'Modify',
+      component: Modify
     },
     {
       path: '/register',

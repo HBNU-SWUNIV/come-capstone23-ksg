@@ -26,7 +26,7 @@
         <b-nav-item to="/board/list">게시판</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav> <!-- 헤더 우측 부분 -->
-        <b-nav-item @click="gotoMyPage">마이페이지</b-nav-item>
+        <b-nav-item @click="gotoMyPage" v-if="$store.state.account.id">마이페이지</b-nav-item>
         <b-nav-item to="/login" v-if ="!$store.state.account.id">로그인</b-nav-item>
         <b-nav-item to="/" @click="fnlogout" v-else>로그아웃</b-nav-item>
       </b-navbar-nav>

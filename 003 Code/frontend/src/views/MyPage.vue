@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     userName() { // 현재 로그인한 사용자의 이름
-      return this.$store.state.account.name
+      return this.$store.state.account.id
     }
   },
   methods: {
